@@ -1,0 +1,115 @@
+Graphs are versatile data structures used to represent relationships between different entities. In C#, graphs can be implemented using various approaches, such as adjacency lists and adjacency matrices. Let's explore the key concepts and types of graphs, along with their implementation in C#.
+
+### Key Concepts
+- **Vertices (Nodes)**: The fundamental units of a graph.
+- **Edges**: Connections between pairs of vertices.
+- **Directed Graph**: Edges have a direction.
+- **Undirected Graph**: Edges do not have a direction.
+- **Weighted Graph**: Edges have weights or costs associated with them.
+- **Unweighted Graph**: Edges do not have weights.
+
+### Types of Graphs
+
+1. **Undirected Graph**
+   - **Description**: Edges have no direction.
+   - **Example**: Social network where friendships are bidirectional.
+   ```csharp
+   public class Graph {
+       private Dictionary<int, List<int>> adjList = new Dictionary<int, List<int>>();
+
+       public void AddEdge(int u, int v) {
+           if (!adjList.ContainsKey(u)) adjList[u] = new List<int>();
+           if (!adjList.ContainsKey(v)) adjList[v] = new List<int>();
+           adjList[u].Add(v);
+           adjList[v].Add(u);
+       }
+   }
+   ```
+
+2. **Directed Graph (Digraph)**
+   - **Description**: Edges have a direction.
+   - **Example**: Web page links where links are directional.
+   ```csharp
+   public class DirectedGraph {
+       private Dictionary<int, List<int>> adjList = new Dictionary<int, List<int>>();
+
+       public void AddEdge(int u, int v) {
+           if (!adjList.ContainsKey(u)) adjList[u] = new List<int>();
+           adjList[u].Add(v);
+       }
+   }
+   ```
+
+3. **Weighted Graph**
+   - **Description**: Edges have weights or costs.
+   - **Example**: Road network where weights represent distances.
+   ```csharp
+   public class WeightedGraph {
+       private Dictionary<int, List<Tuple<int, int>>> adjList = new Dictionary<int, List<Tuple<int, int>>>();
+
+       public void AddEdge(int u, int v, int weight) {
+           if (!adjList.ContainsKey(u)) adjList[u] = new List<Tuple<int, int>>();
+           adjList[u].Add(new Tuple<int, int>(v, weight));
+       }
+   }
+   ```
+
+4. **Unweighted Graph**
+   - **Description**: Edges do not have weights.
+   - **Example**: Simple social network where edges represent friendships.
+   ```csharp
+   public class UnweightedGraph {
+       private Dictionary<int, List<int>> adjList = new Dictionary<int, List<int>>();
+
+       public void AddEdge(int u, int v) {
+           if (!adjList.ContainsKey(u)) adjList[u] = new List<int>();
+           adjList[u].Add(v);
+       }
+   }
+   ```
+
+5. **Complete Graph**
+   - **Description**: Each vertex is connected to every other vertex.
+   - **Example**: Tournament where every player plays against every other player.
+
+6. **Bipartite Graph**
+   - **Description**: Vertices can be divided into two disjoint sets such that every edge connects a vertex in one set to a vertex in the other set.
+   - **Example**: Job applicant graph where vertices are divided into applicants and job openings.
+
+7. **Tree**
+   - **Description**: A connected graph with no cycles.
+   - **Example**: Family tree where each person is connected to their parents.
+
+### Example Usage
+Here's an example of how you can use the `DirectedGraph` class:
+
+```csharp
+class Program {
+    static void Main() {
+        DirectedGraph graph = new DirectedGraph();
+        graph.AddEdge(1, 2);
+        graph.AddEdge(2, 3);
+        graph.AddEdge(3, 4);
+
+        // Display the graph
+        foreach (var node in graph.adjList) {
+            Console.Write(node.Key + ": ");
+            foreach (var edge in node.Value) {
+                Console.Write(edge + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+```
+
+### Conclusion
+Graphs are powerful data structures for representing complex relationships and are widely used in various applications such as social networks, transportation networks, and computer networks¹²³. If you have any specific questions or need further details, feel free to ask!
+
+Source: Conversation with Copilot, 15/8/2024
+(1) Graph Data Structure And Algorithms - GeeksforGeeks. https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/.
+(2) Types of Graphs with Examples - GeeksforGeeks. https://www.geeksforgeeks.org/graph-types-and-applications/.
+(3) What is Graphs in C#? An Indepth Guide | Simplilearn. https://www.simplilearn.com/tutorials/c-sharp-tutorial/what-is-graphs-in-c-sharp.
+(4) Mastering Graph Data Structure in C# - Interviewer.Live. https://interviewer.live/c-sharp/mastering-graph-data-structure-csharp/.
+(5) Introduction to Built-in Data Structures in C# - GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-built-in-data-structures-in-c/.
+(6) Introduction to Graph Data Structure - GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-graphs-data-structure-and-algorithm-tutorials/.

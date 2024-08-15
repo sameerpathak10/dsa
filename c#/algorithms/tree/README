@@ -1,0 +1,380 @@
+In C#, a tree is a hierarchical data structure that consists of nodes, with each node containing a value and references to its child nodes. Trees are used to represent data with a hierarchical relationship, such as file systems, organizational structures, and more. The most common type of tree is the binary tree, where each node has at most two children.
+
+### Key Properties and Methods of Tree Data Structures
+
+#### Properties
+1. **Root**: The top node of the tree, which has no parent.
+   ```csharp
+   public class TreeNode<T> {
+       public T Value { get; set; }
+       public TreeNode<T> Left { get; set; }
+       public TreeNode<T> Right { get; set; }
+
+       public TreeNode(T value) {
+           Value = value;
+           Left = null;
+           Right = null;
+       }
+   }
+   ```
+
+2. **Height**: The length of the longest path from the root to a leaf.
+3. **Depth**: The length of the path from the root to a given node.
+4. **Leaf**: A node with no children.
+5. **Sibling**: Nodes that share the same parent.
+
+#### Methods
+1. **Insertion**: Adding a new node to the tree.
+   ```csharp
+   public void Insert(TreeNode<T> root, T value) {
+       if (root == null) {
+           root = new TreeNode<T>(value);
+       } else if (Comparer<T>.Default.Compare(value, root.Value) < 0) {
+           if (root.Left == null) {
+               root.Left = new TreeNode<T>(value);
+           } else {
+               Insert(root.Left, value);
+           }
+       } else {
+           if (root.Right == null) {
+               root.Right = new TreeNode<T>(value);
+           } else {
+               Insert(root.Right, value);
+           }
+       }
+   }
+   ```
+
+2. **Deletion**: Removing a node from the tree.
+   ```csharp
+   public TreeNode<T> Delete(TreeNode<T> root, T value) {
+       if (root == null) return root;
+
+       if (Comparer<T>.Default.Compare(value, root.Value) < 0) {
+           root.Left = Delete(root.Left, value);
+       } else if (Comparer<T>.Default.Compare(value, root.Value) > 0) {
+           root.Right = Delete(root.Right, value);
+       } else {
+           if (root.Left == null) return root.Right;
+           if (root.Right == null) return root.Left;
+
+           root.Value = MinValue(root.Right);
+           root.Right = Delete(root.Right, root.Value);
+       }
+       return root;
+   }
+
+   private T MinValue(TreeNode<T> node) {
+       T minv = node.Value;
+       while (node.Left != null) {
+           minv = node.Left.Value;
+           node = node.Left;
+       }
+       return minv;
+   }
+   ```
+
+3. **Traversal**: Visiting all the nodes in the tree in a specific order.
+   - **Pre-order Traversal** (Root, Left, Right)
+     ```csharp
+     public void PreOrder(TreeNode<T> node) {
+         if (node != null) {
+             Console.Write(node.Value + " ");
+             PreOrder(node.Left);
+             PreOrder(node.Right);
+         }
+     }
+     ```
+
+   - **In-order Traversal** (Left, Root, Right)
+     ```csharp
+     public void InOrder(TreeNode<T> node) {
+         if (node != null) {
+             InOrder(node.Left);
+             Console.Write(node.Value + " ");
+             InOrder(node.Right);
+         }
+     }
+     ```
+
+   - **Post-order Traversal** (Left, Right, Root)
+     ```csharp
+     public void PostOrder(TreeNode<T> node) {
+         if (node != null) {
+             PostOrder(node.Left);
+             PostOrder(node.Right);
+             Console.Write(node.Value + " ");
+         }
+     }
+     ```
+
+### Example Usage
+Here's a complete example demonstrating the use of a binary tree in C#:
+```csharp
+using System;
+
+public class TreeNode<T> {
+    public T Value { get; set; }
+    public TreeNode<T> Left { get; set; }
+    public TreeNode<T> Right { get; set; }
+
+    public TreeNode(T value) {
+        Value = value;
+        Left = null;
+        Right = null;
+    }
+}
+
+public class BinaryTree<T> {
+    public TreeNode<T> Root { get; set; }
+
+    public void Insert(T value) {
+        if (Root == null) {
+            Root = new TreeNode<T>(value);
+        } else {
+            Insert(Root, value);
+        }
+    }
+
+    private void Insert(TreeNode<T> node, T value) {
+        if (Comparer<T>.Default.Compare(value, node.Value) < 0) {
+            if (node.Left == null) {
+                node.Left = new TreeNode<T>(value);
+            } else {
+                Insert(node.Left, value);
+            }
+        } else {
+            if (node.Right == null) {
+                node.Right = new TreeNode<T>(value);
+            } else {
+                Insert(node.Right, value);
+            }
+        }
+    }
+
+    public void InOrderTraversal(TreeNode<T> node) {
+        if (node != null) {
+            InOrderTraversal(node.Left);
+            Console.Write(node.Value + " ");
+            InOrderTraversal(node.Right);
+        }
+    }
+}
+
+class Program {
+    static void Main() {
+        BinaryTree<int> tree = new BinaryTree<int>();
+        tree.Insert(5);
+        tree.Insert(3);
+        tree.Insert(7);
+        tree.Insert(2);
+        tree.Insert(4);
+        tree.Insert(6);
+        tree.Insert(8);
+
+        Console.WriteLine("In-order Traversal:");
+        tree.InOrderTraversal(tree.Root);
+    }
+}
+```
+
+This example covers the basic operations you can perform with a binary tree in C#. Trees are highly efficient for hierarchical data representation and various search operations¹²³.
+
+If you have any specific questions or need further details, feel free to ask!
+
+Source: Conversation with Copilot, 15/8/2024
+(1) Tree Data Structure - C# Corner. https://www.c-sharpcorner.com/article/tree-data-structure/.
+(2) C# Tree Example - Dot Net Perls. https://www.dotnetperls.com/tree.
+(3) Expression tree data structures - C# | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/expression-trees-explained.
+(4) Expression Trees in C# - Code Maze. https://code-maze.com/csharp-expression-trees/.
+(5) Data Structures and Algorithms (DSA) using C# .NET Core — Binary Trees .... https://www.c-sharpcorner.com/article/data-structures-and-algorithms-dsa-using-c-sharp-net-core-binary-trees-and-binar/.
+(6) github.com. https://github.com/oneEyedSunday/dotNet-playground/tree/e09eaac31197d879df43d14ae08918455809da30/lib%2Flibrary%2FStructures%2FBST.cs.
+
+In C#, there are several types of tree data structures, each with its own unique properties and use cases. Here are some common tree implementations:
+
+### 1. General Tree
+A general tree is a tree data structure where each node can have an arbitrary number of children. This type of tree is useful for representing hierarchical data structures like file systems.
+
+### 2. Binary Tree
+A binary tree is a tree data structure where each node has at most two children, referred to as the left child and the right child. Binary trees are the foundation for more specialized tree structures.
+
+### 3. Binary Search Tree (BST)
+A binary search tree is a binary tree with the additional property that for each node, all elements in the left subtree are less than the node, and all elements in the right subtree are greater than the node. This property makes BSTs efficient for search operations.
+
+### 4. AVL Tree
+An AVL tree is a self-balancing binary search tree where the difference in heights between the left and right subtrees of any node is at most one. This balancing ensures that the tree remains efficient for search, insert, and delete operations.
+
+### 5. Red-Black Tree
+A red-black tree is another type of self-balancing binary search tree. It ensures that the tree remains balanced by enforcing certain properties related to the coloring of nodes and the structure of the tree.
+
+### 6. B-Tree
+A B-tree is a self-balancing tree data structure that maintains sorted data and allows for efficient insertion, deletion, and search operations. It is commonly used in databases and file systems.
+
+### Example Implementations
+
+#### Binary Search Tree (BST)
+Here's a basic implementation of a binary search tree in C#:
+
+```csharp
+public class TreeNode<T> where T : IComparable<T> {
+    public T Value { get; set; }
+    public TreeNode<T> Left { get; set; }
+    public TreeNode<T> Right { get; set; }
+
+    public TreeNode(T value) {
+        Value = value;
+        Left = null;
+        Right = null;
+    }
+}
+
+public class BinarySearchTree<T> where T : IComparable<T> {
+    public TreeNode<T> Root { get; set; }
+
+    public void Insert(T value) {
+        if (Root == null) {
+            Root = new TreeNode<T>(value);
+        } else {
+            Insert(Root, value);
+        }
+    }
+
+    private void Insert(TreeNode<T> node, T value) {
+        if (value.CompareTo(node.Value) < 0) {
+            if (node.Left == null) {
+                node.Left = new TreeNode<T>(value);
+            } else {
+                Insert(node.Left, value);
+            }
+        } else {
+            if (node.Right == null) {
+                node.Right = new TreeNode<T>(value);
+            } else {
+                Insert(node.Right, value);
+            }
+        }
+    }
+
+    public void InOrderTraversal(TreeNode<T> node) {
+        if (node != null) {
+            InOrderTraversal(node.Left);
+            Console.Write(node.Value + " ");
+            InOrderTraversal(node.Right);
+        }
+    }
+}
+```
+
+#### AVL Tree
+Here's a simplified implementation of an AVL tree:
+
+```csharp
+public class AVLTreeNode<T> where T : IComparable<T> {
+    public T Value { get; set; }
+    public AVLTreeNode<T> Left { get; set; }
+    public AVLTreeNode<T> Right { get; set; }
+    public int Height { get; set; }
+
+    public AVLTreeNode(T value) {
+        Value = value;
+        Left = null;
+        Right = null;
+        Height = 1;
+    }
+}
+
+public class AVLTree<T> where T : IComparable<T> {
+    public AVLTreeNode<T> Root { get; set; }
+
+    public void Insert(T value) {
+        Root = Insert(Root, value);
+    }
+
+    private AVLTreeNode<T> Insert(AVLTreeNode<T> node, T value) {
+        if (node == null) {
+            return new AVLTreeNode<T>(value);
+        }
+
+        if (value.CompareTo(node.Value) < 0) {
+            node.Left = Insert(node.Left, value);
+        } else if (value.CompareTo(node.Value) > 0) {
+            node.Right = Insert(node.Right, value);
+        } else {
+            return node;
+        }
+
+        node.Height = 1 + Math.Max(Height(node.Left), Height(node.Right));
+        return Balance(node);
+    }
+
+    private int Height(AVLTreeNode<T> node) {
+        return node?.Height ?? 0;
+    }
+
+    private int BalanceFactor(AVLTreeNode<T> node) {
+        return Height(node.Left) - Height(node.Right);
+    }
+
+    private AVLTreeNode<T> Balance(AVLTreeNode<T> node) {
+        if (BalanceFactor(node) > 1) {
+            if (BalanceFactor(node.Left) < 0) {
+                node.Left = RotateLeft(node.Left);
+            }
+            return RotateRight(node);
+        }
+
+        if (BalanceFactor(node) < -1) {
+            if (BalanceFactor(node.Right) > 0) {
+                node.Right = RotateRight(node.Right);
+            }
+            return RotateLeft(node);
+        }
+
+        return node;
+    }
+
+    private AVLTreeNode<T> RotateRight(AVLTreeNode<T> y) {
+        AVLTreeNode<T> x = y.Left;
+        AVLTreeNode<T> T2 = x.Right;
+
+        x.Right = y;
+        y.Left = T2;
+
+        y.Height = Math.Max(Height(y.Left), Height(y.Right)) + 1;
+        x.Height = Math.Max(Height(x.Left), Height(x.Right)) + 1;
+
+        return x;
+    }
+
+    private AVLTreeNode<T> RotateLeft(AVLTreeNode<T> x) {
+        AVLTreeNode<T> y = x.Right;
+        AVLTreeNode<T> T2 = y.Left;
+
+        y.Left = x;
+        x.Right = T2;
+
+        x.Height = Math.Max(Height(x.Left), Height(x.Right)) + 1;
+        y.Height = Math.Max(Height(y.Left), Height(y.Right)) + 1;
+
+        return y;
+    }
+}
+```
+
+These examples cover the basic implementations of binary search trees and AVL trees. Each type of tree has its own advantages and use cases, making them suitable for different scenarios¹²³.
+
+If you have any specific questions or need further details, feel free to ask!
+
+Source: Conversation with Copilot, 15/8/2024
+(1) C# Binary Search Tree Implementation | C# Examples. https://csharpexamples.com/c-binary-search-tree-implementation/.
+(2) Your One-Stop Solution To Trees in C# | Simplilearn. https://www.simplilearn.com/tutorials/c-sharp-tutorial/tree-in-c-sharp.
+(3) C# Tree Example - Dot Net Perls. https://www.dotnetperls.com/tree.
+(4) A generic binary search tree implementation in C# featuring tree .... https://github.com/m31coding/M31.BinarySearchTrees.
+(5) Tree Data Structure - C# Corner. https://www.c-sharpcorner.com/article/tree-data-structure/.
+(6) Tree Data Structure in C# | Delft Stack. https://bing.com/search?q=Tree+implementations+in+C%23.
+(7) GitHub - viceroypenguin/RBush: R-Tree Implementation for C#. https://github.com/viceroypenguin/RBush.
+(8) Implementing a Binary Search Tree in C# - Educative. https://www.educative.io/courses/data-structures-interviews-cs/implementing-a-binary-search-tree-in-csharp.
+(9) Expression Trees - C# | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/expression-trees/.
+(10) Tree in Data Structure using C# - deBUG.to. https://debug.to/3253/tree-in-data-structure-using-c.
+(11) Data Structures and Algorithms (DSA) using C# .NET Core — Binary Trees .... https://www.c-sharpcorner.com/article/data-structures-and-algorithms-dsa-using-c-sharp-net-core-binary-trees-and-binar/.
+(12) github.com. https://github.com/beshev/SoftUni/tree/18cafc4f23194fd13f411bdc8d386b2a2e01c73f/Data-Structures-Advanced%2FHomeworks-And-Labs%2FRed-Black-Trees-AA-Trees-Exercise%2F01.Red-Black-Tree%2FRedBlackThree.cs.

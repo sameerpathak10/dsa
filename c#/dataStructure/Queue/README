@@ -1,0 +1,212 @@
+In C#, a `Queue<T>` is a collection that follows the First-In-First-Out (FIFO) principle, meaning the first element added is the first one to be removed. It is part of the `System.Collections.Generic` namespace and is useful for scenarios where you need to manage data in a FIFO manner.
+
+### Key Properties and Methods of `Queue<T>`
+
+#### Properties
+1. **Count**: Gets the number of elements contained in the `Queue`.
+   ```csharp
+   Queue<int> myQueue = new Queue<int>();
+   int count = myQueue.Count;
+   ```
+
+#### Methods
+1. **Enqueue**: Adds an element to the end of the `Queue`.
+   ```csharp
+   myQueue.Enqueue(1);
+   myQueue.Enqueue(2);
+   ```
+
+2. **Dequeue**: Removes and returns the element at the beginning of the `Queue`.
+   ```csharp
+   int firstElement = myQueue.Dequeue();
+   ```
+
+3. **Peek**: Returns the element at the beginning of the `Queue` without removing it.
+   ```csharp
+   int firstElement = myQueue.Peek();
+   ```
+
+4. **Contains**: Determines whether an element is in the `Queue`.
+   ```csharp
+   bool containsElement = myQueue.Contains(1);
+   ```
+
+5. **Clear**: Removes all elements from the `Queue`.
+   ```csharp
+   myQueue.Clear();
+   ```
+
+6. **ToArray**: Copies the `Queue` elements to a new array.
+   ```csharp
+   int[] queueArray = myQueue.ToArray();
+   ```
+
+7. **TrimExcess**: Sets the capacity to the actual number of elements in the `Queue`, if that number is less than 90 percent of the current capacity.
+   ```csharp
+   myQueue.TrimExcess();
+   ```
+
+### Example
+Here's a complete example demonstrating the use of a `Queue<T>` in C#:
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program {
+    static void Main() {
+        Queue<string> myQueue = new Queue<string>();
+
+        // Adding elements
+        myQueue.Enqueue("First");
+        myQueue.Enqueue("Second");
+        myQueue.Enqueue("Third");
+
+        // Accessing elements
+        Console.WriteLine("First element: " + myQueue.Peek());
+
+        // Removing elements
+        Console.WriteLine("Dequeued element: " + myQueue.Dequeue());
+
+        // Checking for existence
+        Console.WriteLine("Contains 'First': " + myQueue.Contains("First"));
+
+        // Iterating over elements
+        Console.WriteLine("All elements in queue:");
+        foreach (var item in myQueue) {
+            Console.WriteLine(item);
+        }
+
+        // Clearing the queue
+        myQueue.Clear();
+        Console.WriteLine("Count after clearing: " + myQueue.Count);
+    }
+}
+```
+
+This example covers the basic operations you can perform with a `Queue<T>` in C#. The `Queue` class is highly efficient for operations that involve adding and removing elements in a FIFO manner¹²³.
+
+
+Source: Conversation with Copilot, 15/8/2024
+(1) C# Queue with Examples - GeeksforGeeks. https://www.geeksforgeeks.org/c-sharp-queue-with-examples/.
+(2) Queue Class (System.Collections) | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/api/system.collections.queue?view=net-8.0.
+(3) C# Queue Tutorial - C# Corner. https://www.c-sharpcorner.com/uploadfile/c25b6d/csharp-queue/.
+(4) C# - Queue Class - Online Tutorials Library. https://www.tutorialspoint.com/csharp/csharp_queue.htm.
+
+
+A circular queue, also known as a ring buffer, is a data structure that uses a single, fixed-size buffer as if it were connected end-to-end. This structure is useful for buffering data streams and managing resources in a cyclic manner. Here's how you can implement a circular queue in C#:
+
+### Implementation of Circular Queue
+
+#### Step 1: Define the Circular Queue Class
+Create a class to represent the circular queue, including properties for the queue array, front and rear pointers, and the size of the queue.
+
+```csharp
+public class CircularQueue<T> {
+    private T[] queue;
+    private int front;
+    private int rear;
+    private int size;
+    private int count;
+
+    public CircularQueue(int size) {
+        this.size = size;
+        queue = new T[size];
+        front = -1;
+        rear = -1;
+        count = 0;
+    }
+
+    public bool IsEmpty() {
+        return count == 0;
+    }
+
+    public bool IsFull() {
+        return count == size;
+    }
+
+    public void Enqueue(T item) {
+        if (IsFull()) {
+            throw new InvalidOperationException("Queue is full");
+        }
+
+        if (IsEmpty()) {
+            front = 0;
+        }
+
+        rear = (rear + 1) % size;
+        queue[rear] = item;
+        count++;
+    }
+
+    public T Dequeue() {
+        if (IsEmpty()) {
+            throw new InvalidOperationException("Queue is empty");
+        }
+
+        T item = queue[front];
+        front = (front + 1) % size;
+        count--;
+
+        if (IsEmpty()) {
+            front = -1;
+            rear = -1;
+        }
+
+        return item;
+    }
+
+    public T Peek() {
+        if (IsEmpty()) {
+            throw new InvalidOperationException("Queue is empty");
+        }
+
+        return queue[front];
+    }
+}
+```
+
+### Example Usage
+Here's how you can use the `CircularQueue` class:
+
+```csharp
+class Program {
+    static void Main() {
+        CircularQueue<int> circularQueue = new CircularQueue<int>(5);
+
+        circularQueue.Enqueue(1);
+        circularQueue.Enqueue(2);
+        circularQueue.Enqueue(3);
+        circularQueue.Enqueue(4);
+        circularQueue.Enqueue(5);
+
+        Console.WriteLine("Dequeued: " + circularQueue.Dequeue());
+        Console.WriteLine("Dequeued: " + circularQueue.Dequeue());
+
+        circularQueue.Enqueue(6);
+        circularQueue.Enqueue(7);
+
+        Console.WriteLine("Queue elements:");
+        while (!circularQueue.IsEmpty()) {
+            Console.WriteLine(circularQueue.Dequeue());
+        }
+    }
+}
+```
+
+### Explanation
+1. **Initialization**: The `CircularQueue` class is initialized with a fixed size.
+2. **Enqueue**: Adds an element to the rear of the queue. If the queue is full, an exception is thrown.
+3. **Dequeue**: Removes and returns the element from the front of the queue. If the queue is empty, an exception is thrown.
+4. **Peek**: Returns the element at the front of the queue without removing it.
+5. **IsEmpty**: Checks if the queue is empty.
+6. **IsFull**: Checks if the queue is full.
+
+This implementation ensures that the circular queue operates efficiently, maintaining the FIFO order while utilizing the fixed-size buffer¹²³.
+
+
+Source: Conversation with Copilot, 15/8/2024
+(1) Queue Class (System.Collections) | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/api/system.collections.queue?view=net-8.0.
+(2) Introduction to Circular Queue - GeeksforGeeks. https://www.geeksforgeeks.org/introduction-to-circular-queue/.
+(3) Leniel Maccaferri's blog: Thread Safe Circular Queue in C#. https://www.leniel.net/2008/04/thread-safe-circular-queue-in-csharp.html.
+(4) Circular Queue - CodeLikeChamp. https://codelikechamp.com/circular-queue/.
+(5) Circular Queue Data Structure in C# - CodeProject. https://www.codeproject.com/articles/16533/circular-queue-data-structure-in-c.

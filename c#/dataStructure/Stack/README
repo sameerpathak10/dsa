@@ -1,0 +1,95 @@
+In C#, a `Stack<T>` is a collection that follows the Last-In-First-Out (LIFO) principle, meaning the last element added is the first one to be removed. It is part of the `System.Collections.Generic` namespace and is useful for scenarios where you need to manage data in a LIFO manner.
+
+### Key Properties and Methods of `Stack<T>`
+
+#### Properties
+1. **Count**: Gets the number of elements contained in the `Stack`.
+   ```csharp
+   Stack<int> myStack = new Stack<int>();
+   int count = myStack.Count;
+   ```
+
+#### Methods
+1. **Push**: Adds an element to the top of the `Stack`.
+   ```csharp
+   myStack.Push(1);
+   myStack.Push(2);
+   ```
+
+2. **Pop**: Removes and returns the element at the top of the `Stack`.
+   ```csharp
+   int topElement = myStack.Pop();
+   ```
+
+3. **Peek**: Returns the element at the top of the `Stack` without removing it.
+   ```csharp
+   int topElement = myStack.Peek();
+   ```
+
+4. **Contains**: Determines whether an element is in the `Stack`.
+   ```csharp
+   bool containsElement = myStack.Contains(1);
+   ```
+
+5. **Clear**: Removes all elements from the `Stack`.
+   ```csharp
+   myStack.Clear();
+   ```
+
+6. **ToArray**: Copies the `Stack` to a new array.
+   ```csharp
+   int[] stackArray = myStack.ToArray();
+   ```
+
+7. **TrimExcess**: Sets the capacity to the actual number of elements in the `Stack`, if that number is less than 90 percent of the current capacity.
+   ```csharp
+   myStack.TrimExcess();
+   ```
+
+### Example
+Here's a complete example demonstrating the use of a `Stack<T>` in C#:
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program {
+    static void Main() {
+        Stack<string> myStack = new Stack<string>();
+
+        // Adding elements
+        myStack.Push("First");
+        myStack.Push("Second");
+        myStack.Push("Third");
+
+        // Accessing elements
+        Console.WriteLine("Top element: " + myStack.Peek());
+
+        // Removing elements
+        Console.WriteLine("Popped element: " + myStack.Pop());
+
+        // Checking for existence
+        Console.WriteLine("Contains 'First': " + myStack.Contains("First"));
+
+        // Iterating over elements
+        Console.WriteLine("All elements in stack:");
+        foreach (var item in myStack) {
+            Console.WriteLine(item);
+        }
+
+        // Clearing the stack
+        myStack.Clear();
+        Console.WriteLine("Count after clearing: " + myStack.Count);
+    }
+}
+```
+
+This example covers the basic operations you can perform with a `Stack<T>` in C#. The `Stack` class is highly efficient for operations that involve adding and removing elements in a LIFO manner¹²³.
+
+
+Source: Conversation with Copilot, 15/8/2024
+(1) Stack Class (System.Collections) | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/api/system.collections.stack?view=net-8.0.
+(2) Stack<T> Class (System.Collections.Generic) | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.stack-1?view=net-8.0.
+(3) How to Implement a Stack in C# | David Boland Blog. https://davidboland.site/blog/how-to-implement-a-stack-in-c.
+(4) C# Stack<T> - TutorialsTeacher.com. https://www.tutorialsteacher.com/csharp/csharp-stack.
+(5) Data Structures In C#: A Comprehensive Guide | Nile Bits. https://www.nilebits.com/blog/2024/02/data-structures-in-csharp/.
+(6) en.wikipedia.org. https://en.wikipedia.org/wiki/Stack_(abstract_data_type).

@@ -1,0 +1,102 @@
+In C#, a `HashSet<T>` is a collection designed to store unique elements and provide high-performance set operations. It is part of the `System.Collections.Generic` namespace and is particularly useful when you need to ensure that no duplicates are present in your collection.
+
+### Key Properties and Methods of `HashSet<T>`
+
+#### Properties
+1. **Count**: Gets the number of elements contained in the `HashSet`.
+   ```csharp
+   HashSet<int> myHashSet = new HashSet<int>();
+   int count = myHashSet.Count;
+   ```
+
+2. **Comparer**: Gets the `IEqualityComparer<T>` object that is used to determine equality for the values in the `HashSet`.
+   ```csharp
+   IEqualityComparer<int> comparer = myHashSet.Comparer;
+   ```
+
+#### Methods
+1. **Add**: Adds an element to the `HashSet` if it is not already present.
+   ```csharp
+   myHashSet.Add(1);
+   ```
+
+2. **Remove**: Removes the specified element from the `HashSet`.
+   ```csharp
+   myHashSet.Remove(1);
+   ```
+
+3. **Contains**: Determines whether the `HashSet` contains the specified element.
+   ```csharp
+   bool contains = myHashSet.Contains(1);
+   ```
+
+4. **Clear**: Removes all elements from the `HashSet`.
+   ```csharp
+   myHashSet.Clear();
+   ```
+
+5. **UnionWith**: Modifies the current `HashSet` to contain all elements that are present in itself, the specified collection, or both.
+   ```csharp
+   HashSet<int> otherSet = new HashSet<int> { 2, 3 };
+   myHashSet.UnionWith(otherSet);
+   ```
+
+6. **IntersectWith**: Modifies the current `HashSet` to contain only elements that are present in both the current `HashSet` and the specified collection.
+   ```csharp
+   myHashSet.IntersectWith(otherSet);
+   ```
+
+7. **ExceptWith**: Removes all elements in the specified collection from the current `HashSet`.
+   ```csharp
+   myHashSet.ExceptWith(otherSet);
+   ```
+
+8. **SymmetricExceptWith**: Modifies the current `HashSet` to contain only elements that are present in either the current `HashSet` or the specified collection, but not both.
+   ```csharp
+   myHashSet.SymmetricExceptWith(otherSet);
+   ```
+
+### Example
+Here's a complete example demonstrating some common operations with `HashSet<T>`:
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program {
+    static void Main() {
+        HashSet<int> myHashSet = new HashSet<int> { 1, 2, 3, 4, 5 };
+
+        // Adding elements
+        myHashSet.Add(6);
+
+        // Checking for existence
+        Console.WriteLine("Contains 3: " + myHashSet.Contains(3));
+
+        // Removing an element
+        myHashSet.Remove(2);
+
+        // Iterating over elements
+        Console.WriteLine("Elements in HashSet:");
+        foreach (var item in myHashSet) {
+            Console.WriteLine(item);
+        }
+
+        // Union with another set
+        HashSet<int> otherSet = new HashSet<int> { 4, 5, 6, 7, 8 };
+        myHashSet.UnionWith(otherSet);
+        Console.WriteLine("After UnionWith:");
+        foreach (var item in myHashSet) {
+            Console.WriteLine(item);
+        }
+    }
+}
+```
+
+This example covers the basic operations you can perform with a `HashSet<T>` in C#. The `HashSet` class is highly efficient for operations that involve checking for the existence of elements and performing set operations¹²³.
+
+
+Source: Conversation with Copilot, 14/8/2024
+(1) HashSet in C# with Examples - GeeksforGeeks. https://www.geeksforgeeks.org/hashset-in-c-sharp-with-examples/.
+(2) C# HashSet: Everything you need to know - Josip Miskovic. https://josipmisko.com/posts/c-sharp-hashset.
+(3) HashSet in C# - Code Maze. https://code-maze.com/csharp-hashset/.
+(4) c# hashset of objects ️ - .NetTeach. https://dotnetteach.com/blog/csharp-hashset-of-objects.

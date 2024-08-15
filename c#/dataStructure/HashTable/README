@@ -1,0 +1,103 @@
+In C#, a `Hashtable` is a collection that stores key-value pairs and is part of the `System.Collections` namespace. It is similar to a dictionary but is non-generic, meaning it can store keys and values of any data type. Here are some key properties and methods of the `Hashtable` class:
+
+### Key Properties
+1. **Count**: Gets the number of key-value pairs contained in the `Hashtable`.
+   ```csharp
+   Hashtable myHashtable = new Hashtable();
+   int count = myHashtable.Count;
+   ```
+
+2. **IsReadOnly**: Gets a value indicating whether the `Hashtable` is read-only.
+   ```csharp
+   bool isReadOnly = myHashtable.IsReadOnly;
+   ```
+
+3. **Keys**: Gets an `ICollection` containing the keys in the `Hashtable`.
+   ```csharp
+   ICollection keys = myHashtable.Keys;
+   ```
+
+4. **Values**: Gets an `ICollection` containing the values in the `Hashtable`.
+   ```csharp
+   ICollection values = myHashtable.Values;
+   ```
+
+### Key Methods
+1. **Add**: Adds an element with the specified key and value into the `Hashtable`.
+   ```csharp
+   myHashtable.Add("key1", "value1");
+   ```
+
+2. **Remove**: Removes the element with the specified key from the `Hashtable`.
+   ```csharp
+   myHashtable.Remove("key1");
+   ```
+
+3. **ContainsKey**: Determines whether the `Hashtable` contains a specific key.
+   ```csharp
+   bool containsKey = myHashtable.ContainsKey("key1");
+   ```
+
+4. **ContainsValue**: Determines whether the `Hashtable` contains a specific value.
+   ```csharp
+   bool containsValue = myHashtable.ContainsValue("value1");
+   ```
+
+5. **Clear**: Removes all elements from the `Hashtable`.
+   ```csharp
+   myHashtable.Clear();
+   ```
+
+6. **Indexer**: Gets or sets the value associated with the specified key.
+   ```csharp
+   myHashtable["key1"] = "newValue";
+   ```
+
+### Example
+Here's a complete example demonstrating the use of a `Hashtable` in C#:
+```csharp
+using System;
+using System.Collections;
+
+class Program {
+    static void Main() {
+        Hashtable myHashtable = new Hashtable();
+
+        // Adding elements
+        myHashtable.Add("txt", "notepad.exe");
+        myHashtable.Add("bmp", "paint.exe");
+        myHashtable.Add("rtf", "wordpad.exe");
+
+        // Accessing elements
+        Console.WriteLine("Value for key 'rtf': " + myHashtable["rtf"]);
+
+        // Checking for keys and values
+        Console.WriteLine("Contains key 'bmp': " + myHashtable.ContainsKey("bmp"));
+        Console.WriteLine("Contains value 'paint.exe': " + myHashtable.ContainsValue("paint.exe"));
+
+        // Iterating over keys and values
+        Console.WriteLine("All keys and values:");
+        foreach (DictionaryEntry entry in myHashtable) {
+            Console.WriteLine("Key = {0}, Value = {1}", entry.Key, entry.Value);
+        }
+
+        // Removing an element
+        myHashtable.Remove("bmp");
+
+        // Clearing the hashtable
+        myHashtable.Clear();
+        Console.WriteLine("Count after clearing: " + myHashtable.Count);
+    }
+}
+```
+
+This example covers the basic operations you can perform with a `Hashtable` in C#. The `Hashtable` class is useful for scenarios where you need a collection of key-value pairs and do not require type safety¹²³.
+
+
+
+Source: Conversation with Copilot, 14/8/2024
+(1) Hashtable Class (System.Collections) | Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/api/system.collections.hashtable?view=net-8.0.
+(2) C# Hashtable (With Examples) - TutorialsTeacher.com. https://www.tutorialsteacher.com/csharp/csharp-hashtable.
+(3) C# HashTable Collection Tutorial | KoderHQ. https://www.koderhq.com/tutorial/csharp/hashtable/.
+(4) C# - Hashtable Class - Online Tutorials Library. https://www.tutorialspoint.com/csharp/csharp_hashtable.htm.
+(5) C# HashTable - C# Corner. https://www.c-sharpcorner.com/UploadFile/e83792/CSharp-HashTable/.
