@@ -25,3 +25,26 @@ Constraints:
 1 <= nums.length <= 104
 0 <= nums[i] <= 1000
 It's guaranteed that you can reach nums[n - 1].*/
+
+public int Jump(int[] nums)
+{
+    int near = 0, far = 0, minJump = 0;
+
+    while (far < nums.Length - 1)
+    {
+        int farthest = 0;
+        for (int i = near; i < far + 1; i++)
+            farthest = Math.Max(farthest, i + nums[i]);
+        near = far;
+        far = farthest;
+        minJump++;
+
+    }
+    return minJump;
+}
+
+Console.WriteLine(Jump([2, 3, 1, 1, 4]));
+Console.WriteLine(Jump([2, 3, 0, 1, 4]));
+//Console.WriteLine(Jump([3, 2, 1, 0, 4]));
+Console.WriteLine(Jump([1, 2]));
+
