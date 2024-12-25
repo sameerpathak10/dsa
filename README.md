@@ -1,4 +1,3 @@
-```
 Here’s a comprehensive overview of common problem-solving patterns, along with TypeScript examples for each:
 
 ## 1. Prefix Sum
